@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zen_garden_genetic_algorithm", "zen_garden_genetic_algorithm\zen_garden_genetic_algorithm.csproj", "{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}.Debug|anycpu.Build.0 = Debug|anycpu
+		{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}.Release|anycpu.ActiveCfg = Release|anycpu
+		{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+EndGlobal
