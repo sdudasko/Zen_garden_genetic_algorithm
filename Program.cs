@@ -11,10 +11,9 @@
  *  - je to index policka, kde ma vstupit, ked vojde do zahradky, 1 chromozom moze mat tychto genov teda o/2 + k
  *  - moze obsahovat informaciu, kde sa otoci
  * 
-*/
-
-/**
+ *
  * Postup:
+ * 
  * 1. Vytvorime pociatocnu populaciu (skupinu chromozomov, ktore maju nahodne vygenerovane cisla)
  * 2. Ohodnotime chromozomy populacie
  * 3. Zo sucasnesnej pozicie sa vyberu dvojice chromozomov - rodicia
@@ -27,8 +26,22 @@ namespace zen_garden_genetic_algorithm
 {
     class MainClass
     {
+        public const int Dimension_x = 3;
+        public const int Dimension_y = 3;
+
         public static void Main(string[] args)
         {
+
+
+            int[,] Zens_garden = new int[Dimension_x, Dimension_y]
+            {
+                { 0, 0, 0 },
+                { 0, 0, -2 },
+                { 0, 0, 0 },
+            };
+
+            new Population();
+
             Console.WriteLine("Hello World!");
         }
     }

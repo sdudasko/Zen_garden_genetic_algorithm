@@ -3,8 +3,60 @@ namespace zen_garden_genetic_algorithm
 {
     public class Gene
     {
+        public int X = -1;
+        public int Y = -1;
+        public String Direction = "Right";
+
         public Gene()
         {
+            int RangeX = MainClass.Dimension_x;
+            int RangeY = MainClass.Dimension_y;
+
+            int Assignments_count = 0;
+
+            this.Assign_axis_values(RangeX, RangeY, Assignments_count);
+            
+        }
+
+        private void Assign_axis_values(int RangeX, int RangeY, int Assignments_count) // TODO - assignments count - if we already have such gene with the same x and y, regenerate?
+        {
+            Random rand = new Random();
+
+            if (RangeX > RangeY) // Means we have matrix is wide, not tall
+            {
+                if (rand.NextDouble() >= 0.4) // We add more genes on the top and bottom side
+                {
+                    int x = rand.Next(1, RangeX + 1);
+                    this.X = x;
+
+                    if (rand.NextDouble() >= 0.5) {
+                        this.Y = RangeY;
+                    } else
+                    {
+                        this.Y = 0;
+                    }
+
+                }
+                else
+                {
+                    int y = rand.Next(1, RangeY + 1);
+                    this.Y = y;
+
+                    if (rand.NextDouble() >= 0.5)  // X is either on the very left or very right
+                    {
+                        this.X = RangeX;
+                    }
+                    else
+                    {
+                        this.X = 0;
+                    }
+                }
+            }
+
+            if (rand.NextDouble() >= 0.5)
+            {
+                this.Direction = "Left";
+            }
         }
     }
 }
