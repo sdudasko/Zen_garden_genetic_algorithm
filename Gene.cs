@@ -22,34 +22,41 @@ namespace zen_garden_genetic_algorithm
         {
             Random rand = new Random();
 
-            if (RangeX > RangeY) // Means we have matrix is wide, not tall
+            //if (RangeX > RangeY) // Means we have matrix is wide, not tall
+            if (rand.NextDouble() >= 0.5)
             {
-                if (rand.NextDouble() >= 0.4) // We add more genes on the top and bottom side
+                int x = rand.Next(1, RangeX + 1);
+                this.X = x;
+
+                if (rand.NextDouble() >= 0.5) {
+                    this.Y = RangeY;
+                } else
                 {
-                    int x = rand.Next(1, RangeX + 1);
-                    this.X = x;
+                    this.Y = 0;
+                }
 
-                    if (rand.NextDouble() >= 0.5) {
-                        this.Y = RangeY;
-                    } else
-                    {
-                        this.Y = 0;
-                    }
+                if (this.X == 0 && this.Y == 0)
+                {
+                    this.Assign_axis_values(RangeX, RangeY, Assignments_count);
+                }
 
+            } else
+            {
+                int y = rand.Next(1, RangeY + 1);
+                this.Y = y;
+
+                if (rand.NextDouble() >= 0.5)  // X is either on the very left or very right
+                {
+                    this.X = RangeX;
                 }
                 else
                 {
-                    int y = rand.Next(1, RangeY + 1);
-                    this.Y = y;
+                    this.X = 0;
+                }
 
-                    if (rand.NextDouble() >= 0.5)  // X is either on the very left or very right
-                    {
-                        this.X = RangeX;
-                    }
-                    else
-                    {
-                        this.X = 0;
-                    }
+                if (this.X == 0 && this.Y == 0) // TODO - check all 4 corners
+                {
+                    this.Assign_axis_values(RangeX, RangeY, Assignments_count);
                 }
             }
 
@@ -57,6 +64,30 @@ namespace zen_garden_genetic_algorithm
             {
                 this.Direction = "Left";
             }
+        }
+
+        private void Gene_walk()
+        {
+            if (this.X)
+        }
+
+        private bool Is_dimension_marginal(int Dimension_val, string Dimension)
+        {
+            if (Dimension == "X")
+            {
+                if (Dimension_val == 0 || Dimension_val == MainClass.Dimension_x - 1)
+                {
+                    return true;
+                }
+            } else
+            {
+                if (Dimension_val == 0 || Dimension_val == MainClass.Dimension_y - 1)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
