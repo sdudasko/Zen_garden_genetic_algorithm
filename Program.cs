@@ -32,17 +32,15 @@ namespace zen_garden_genetic_algorithm
         public static void Main(string[] args)
         {
 
-
             int[,] Zens_garden = new int[Dimension_x, Dimension_y]
             {
                 { 0, 0, 0 },
-                { 0, 0, -2 },
+                { 0, 0, 0 },
                 { 0, 0, 0 },
             };
 
-            new Population();
+            new Population(Zens_garden);
 
-            Console.WriteLine("Hello World!");
         }
     }
 }

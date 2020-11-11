@@ -7,9 +7,10 @@ namespace zen_garden_genetic_algorithm
     {
         List<Chromosome> chromosomes = new List<Chromosome>();
 
-        public Population()
+        public Population(int[,] Garden)
         {
-            new Chromosome();
+            Chromosome Testing_chromosome = new Chromosome(Garden);
+            Testing_chromosome.Print_garden();
         }
     }
 }

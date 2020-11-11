@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Gene.cs">
     <Files>
-      <File FileName="Chromosome.cs" Line="19" Column="1" />
-      <File FileName="Population.cs" Line="12" Column="22" />
-      <File FileName="Program.cs" Line="39" Column="23" />
-      <File FileName="Gene.cs" Line="23" Column="1" />
+      <File FileName="Chromosome.cs" Line="7" Column="23" />
+      <File FileName="Population.cs" Line="13" Column="47" />
+      <File FileName="Program.cs" Line="42" Column="24" />
+      <File FileName="Gene.cs" Line="69" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,9 +25,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
   <MonoDevelop.Ide.ItemProperties.zen__garden__genetic__algorithm PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/stefan.dudasko/web/skola/5_semester/UI/zen_garden_genetic_algorithm/zen_garden_genetic_algorithm/Chromosome.cs" relfile="Chromosome.cs" line="13" column="13" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

@@ -1,3 +1,4 @@
 /Users/stefan.dudasko/web/skola/5_semester/UI/zen_garden_genetic_algorithm/zen_garden_genetic_algorithm/bin/Release/zen_garden_genetic_algorithm.exe
 /Users/stefan.dudasko/web/skola/5_semester/UI/zen_garden_genetic_algorithm/zen_garden_genetic_algorithm/obj/Release/zen_garden_genetic_algorithm.csproj.CoreCompileInputs.cache
 /Users/stefan.dudasko/web/skola/5_semester/UI/zen_garden_genetic_algorithm/zen_garden_genetic_algorithm/obj/Release/zen_garden_genetic_algorithm.exe
+/Users/stefan.dudasko/web/skola/5_semester/UI/zen_garden_genetic_algorithm/zen_garden_genetic_algorithm/obj/Release/zen_garden_genetic_algorithm.csprojAssemblyReference.cache
