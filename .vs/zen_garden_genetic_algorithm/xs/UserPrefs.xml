@@ -1,25 +1,11 @@
 ﻿<Properties StartupConfiguration="{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Gene.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
       <File FileName="Chromosome.cs" Line="7" Column="23" />
-      <File FileName="Population.cs" Line="13" Column="47" />
-      <File FileName="Program.cs" Line="42" Column="24" />
-      <File FileName="Gene.cs" Line="69" Column="18" />
+      <File FileName="Population.cs" />
+      <File FileName="Program.cs" Line="40" Column="26" />
+      <File FileName="Gene.cs" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="zen_garden_genetic_algorithm" expanded="True">
-            <Node name="zen_garden_genetic_algorithm" expanded="True">
-              <Node name="Gene.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|anycpu" />
