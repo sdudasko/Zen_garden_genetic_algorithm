@@ -10,6 +10,7 @@ namespace zen_garden_genetic_algorithm
         List<Gene> genes = new List<Gene>();
         public int Finess = -1;
         public int[,] Garden_map = new int[MainClass.Dimension_x, MainClass.Dimension_y];
+        public int Number_of_rocks = 0;
 
         public Chromosome(int[,] Garden)
         {
@@ -38,21 +39,40 @@ namespace zen_garden_genetic_algorithm
                 this.genes.Add(gene);
             }
 
-            //Gene ex = this.genes.First<Gene>();
-            //ex.Gene_walk();
-
-            //Gene second = this.genes[1];
-            //second.Gene_walk();
-
             this.genes.ForEach(delegate (Gene Gene)
             {
                 Gene.Gene_walk();
             });
+
+            this.Set_fitness();
+
+            this.Set_number_of_rocks();
+
+            if (this.Finess == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
+            {
+                Console.WriteLine("Solution found!");
+            }
+
         }
 
         public void Set_fitness()
         {
+            int Fitness = 0;
 
+            int rowLength = this.Garden_map.GetLength(0);
+            int colLength = this.Garden_map.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    if ((this.Garden_map[i, j] != 0) && (this.Garden_map[i, j] != -1))
+                    {
+                        Fitness++;
+                    }
+                }
+            }
+            this.Finess = Fitness;
         }
 
         /**
@@ -76,6 +96,24 @@ namespace zen_garden_genetic_algorithm
             }
 
             Console.Write(arrayString);
+        }
+        public void Set_number_of_rocks()
+        {
+            int Fitness = 0;
+
+            int rowLength = this.Garden_map.GetLength(0);
+            int colLength = this.Garden_map.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    if (this.Garden_map[i, j] == -1)
+                    {
+                        this.Number_of_rocks++;
+                    }
+                }
+            }
         }
 
         // https://stackoverflow.com/a/1262619/6525417 Function for array shuffle
