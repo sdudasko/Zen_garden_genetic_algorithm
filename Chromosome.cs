@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography; // For shuffle
 
 namespace zen_garden_genetic_algorithm
 {
@@ -21,15 +22,28 @@ namespace zen_garden_genetic_algorithm
 
         public void Fill_genes()
         {
-            for (int i = 0; i < (MainClass.Dimension_x - 1 + MainClass.Dimension_y - 1); i++) // TODO - o/2 + k, -1s because of indexing for both dimensions
+            List<int> Genes_n = new List<int>();
+
+            int Number_of_genes_to_generate = (MainClass.Dimension_x + MainClass.Dimension_y) * 2;
+            for (int i = 1; i <= Number_of_genes_to_generate; i++)
             {
-                Gene gene = new Gene(i + 1, this);
+                Genes_n.Add(i);
+            }
+
+            //Chromosome.Shuffle(Genes_n);
+
+            for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
+            {
+                Gene gene = new Gene(Genes_n[i], this, i+1);
                 this.genes.Add(gene);
             }
 
+            Gene ex = this.genes.First<Gene>();
+            ex.Gene_walk();
+
             this.genes.ForEach(delegate (Gene Gene)
             {
-                Gene.Gene_walk();
+                //Gene.Gene_walk();
             });
         }
 
@@ -59,6 +73,24 @@ namespace zen_garden_genetic_algorithm
             }
 
             Console.Write(arrayString);
+        }
+
+        // https://stackoverflow.com/a/1262619/6525417 Function for array shuffle
+        public static void Shuffle<T>(IList<T> list)
+        {
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            int n = list.Count;
+            while (n > 1)
+            {
+                byte[] box = new byte[1];
+                do provider.GetBytes(box);
+                while (!(box[0] < n * (Byte.MaxValue / n)));
+                int k = (box[0] % n);
+                n--;
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

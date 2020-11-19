@@ -34,14 +34,18 @@ namespace zen_garden_genetic_algorithm
 
             int[,] Zens_garden = new int[Dimension_x, Dimension_y]
             {
-                { 3, 3, 3, 3 },
-                { 2, 0, 0, 1 },
-                { 2, 0, 0, 1 },
-                { 2, 0, 0, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 2, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 2, 0 },
             };
 
             new Population(Zens_garden);
 
+        }
+        public static int Get_obvod()
+        {
+            return (MainClass.Dimension_x + MainClass.Dimension_y) * 2;
         }
     }
 }

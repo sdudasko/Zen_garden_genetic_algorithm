@@ -4,6 +4,7 @@ namespace zen_garden_genetic_algorithm
     public class Gene
     {
         public int N; // Gene is nth -> Indexing from 1 (for easier matrix notation)
+        public int Order;
 
         public int X = 0;
         public int Y = 0;
@@ -11,143 +12,221 @@ namespace zen_garden_genetic_algorithm
 
         public Chromosome Chromosome;
 
-        public Gene(int N, Chromosome Chromosome)
+        public Gene(int N, Chromosome Chromosome, int Order)
         {
             this.N = N;
-            int RangeX = MainClass.Dimension_x - 1;
-            int RangeY = MainClass.Dimension_y - 1;
             this.Chromosome = Chromosome;
-
-            int Assignments_count = 0;
-
-            this.Assign_axis_values(RangeX, RangeY, Assignments_count);
-        }
-
-        private void Assign_axis_values(int RangeX, int RangeY, int Assignments_count) // TODO - assignments count - if we already have such gene with the same x and y, regenerate?
-        {
-            Random rand = new Random();
-
-            if (rand.NextDouble() >= 0.5)
-            {
-                int x = rand.Next(0, RangeX);
-                this.X = x;
-
-                if (rand.NextDouble() >= 0.5) {
-                    this.Y = RangeY;
-                } else
-                {
-                    this.Y = 0;
-                }
-
-            } else
-            {
-                int y = rand.Next(0, RangeY);
-                this.Y = y;
-
-                if (rand.NextDouble() >= 0.5)  // X is either on the very left or very right
-                {
-                    this.X = RangeX;
-                }
-                else
-                {
-                    this.X = 0;
-                }
-
-            }
-
-            if (rand.NextDouble() >= 0.99) // TODO - we have fixed rotation now, then change to .5
-            {
-                this.Direction = "Left";
-            }
+            this.Order = Order;
         }
 
         public void Gene_walk()
         {
-            String Increment_direction = "";
-            int Increment_by = 0;
-
-            this.Get_dimension_and_direction_to_walk(ref Increment_direction, ref Increment_by);
-
-            if (Increment_direction == "y")
+            this.N = 10;
+            if (this.N <= MainClass.Dimension_x)
             {
-                this.Start_waking_vertical(Increment_by, 0);
-            }
-            
-        }
-
-        private void Start_waking_vertical(int Increment, int Other_direction_increment)
-        {
-            this.Chromosome.Garden_map[Other_direction_increment, this.X] = this.N;
-
-            if (Other_direction_increment != MainClass.Dimension_y - 1)
+                this.Walk_from_top();
+            } else if ((this.N > MainClass.Dimension_x) && (this.N <= MainClass.Dimension_x + MainClass.Dimension_y))
             {
-                this.Start_waking_vertical(Increment, ++Other_direction_increment);
-            }
-        }
-
-        private void Get_dimension_and_direction_to_walk(ref String Increment_direction, ref int Increment_by)
-        {
-
-            if (this.X == 0 && this.Y == 0) // Top left
+                this.Walk_from_right();
+            } else if ((this.N > MainClass.Dimension_y + MainClass.Dimension_y) && this.N <= ((MainClass.Dimension_x * 2) + MainClass.Dimension_y))
             {
-                Increment_direction = "y";
-                Increment_by = 1;
-
-                return;
-
-            }
-            else if (this.X == 0 && this.Y == MainClass.Dimension_y - 1)
-            { // Bottom left
-
-                Increment_direction = "y";
-                Increment_by = -1;
-
-                return;
-
-            }
-            else if (this.Y == 0 && this.X == MainClass.Dimension_x - 1) // Top right
-            {
-                Increment_direction = "y";
-                Increment_by = 1;
-
-                return;
-
-            }
-            else if ((this.Y == MainClass.Dimension_y - 1) && (this.X == MainClass.Dimension_x - 1)) // Bottom right
-            {
-                Increment_direction = "y";
-                Increment_by = -1;
-
-                return;
-            }
-
-
-            if (this.X != 0 && this.X != MainClass.Dimension_x - 1) // Not in the corner and we know we are on the bottom or top side
-            {
-                if (this.Y == 0) // We are on the top side so we need to go down, so we need to increment y value
-                {
-                    Increment_direction = "y";
-                    Increment_by = 1;
-
-                } else // We are on the top so we need to decrement y value
-                {
-                    Increment_direction = "y";
-                    Increment_by = -1;
-                }
+                this.Walk_from_bottom();
             } else
             {
-                if (this.X == 0) // We are on the left side so we need to go to the right in x dimension
-                {
-                    Increment_direction = "x";
-                    Increment_by = 1;
-
-                }
-                else // We are on the very right so we go to left (decrementing x)
-                {
-                    Increment_direction = "x";
-                    Increment_by = -1;
-                }
+                this.Walk_from_left();
             }
         }
+
+        public void Walk_from_top(int y = -1, int x = -1)
+        {
+            int i = y;
+            if (y == -1 || x == -1)
+            {
+                x = this.N - 1;
+                i = 0;
+                if (this.Chromosome.Garden_map[i, x] != 0) return;
+            }
+
+            bool br = false;
+            while (i < MainClass.Dimension_y)
+            {
+                if (this.Chromosome.Garden_map[i, x] != 0 && y != i)
+                {
+                    this.Rotate(i - 1, x, "Top");
+                    br = true;
+                    if (this.Chromosome.Garden_map[y, i - 1] != 0) return;
+                }
+                if (br) break;
+                this.Chromosome.Garden_map[i++, x] = this.Order;
+                
+            }
+        }
+
+        public void Walk_from_right(int y = -1, int x = -1)
+        {
+            int i = x;
+            if (y == -1 || x == -1)
+            {
+                i = MainClass.Dimension_x;
+                y = this.N - MainClass.Dimension_x - 1;
+                if (this.Chromosome.Garden_map[y, i - 1] != 0) return;
+            }
+
+            bool br = false;
+            while (i > 0)
+            {
+                if (this.Chromosome.Garden_map[y, i - 1] != 0)
+                {
+                    this.Rotate(y, i, "Right");
+                    br = true;
+                }
+                if (br) break;
+                this.Chromosome.Garden_map[y, --i] = this.Order;
+            }
+        }
+
+        public void Walk_from_bottom(int y = -1, int x = -1)
+        {
+            bool br = false;
+            int i = y;
+            if (y == -1 || x == -1)
+            {
+                x = MainClass.Dimension_x - (this.N - ((MainClass.Dimension_x + MainClass.Dimension_y)));
+                i = MainClass.Dimension_y;
+                if (this.Chromosome.Garden_map[i - 1, x] != 0) return;
+            }
+
+            while (i > 0)
+            {
+                if (this.Chromosome.Garden_map[i - 1, x] != 0) // TODO - toto musi niekedy crashnut
+                {
+                    this.Rotate(i, x, "Bottom");
+                    br = true;
+                }
+                if (br) break;
+                this.Chromosome.Garden_map[--i, x] = this.Order;
+            }
+        }
+
+        public void Walk_from_left(int y = -1, int x = -1)
+        {
+            bool br = false;
+            int i = x;
+            if (y == -1 || x == -1)
+            {
+                y = MainClass.Get_obvod() - this.N;
+                i = 0;
+                if (this.Chromosome.Garden_map[y, i] != 0) return;
+            }
+
+            while (i < MainClass.Dimension_x)
+            {
+                if (this.Chromosome.Garden_map[y, i] != 0 && (i != x))
+                {
+                    this.Rotate(y, i - 1, "Left");
+                    br = true;
+                }
+
+                if (br) break;
+                this.Chromosome.Garden_map[y, i++] = this.Order; // TODO - vsade
+            }
+        }
+
+        private void Rotate(int y, int x, String From = "")
+        {
+            switch (From) {
+                case "Top":
+                    if (this.Direction == "Right")
+                    {
+                        if (this.Can_go_left(y, x))
+                        {
+                            this.Walk_from_right(y, x);
+                        }
+                    } else
+                    {
+                        if (this.Can_go_right(y, x))
+                        {
+                            this.Walk_from_left(y, x);
+                        }
+
+                    }
+                    break;
+                case "Right":
+                    if (this.Direction == "Right")
+                    {
+                        if (this.Can_go_top(y, x))
+                        {
+                            this.Walk_from_bottom(y, x);
+                        }
+                    }
+                    else
+                    {
+                        if (this.Can_go_bottom(y, x))
+                        {
+                            this.Walk_from_top(y, x);
+                        }
+
+                    }
+                    break;
+
+                case "Left":
+                    if (this.Direction == "Right")
+                    {
+                        if (this.Can_go_bottom(y, x))
+                        {
+                            this.Walk_from_top(y, x);
+                        }
+                    }
+                    else
+                    {
+                        if (this.Can_go_top(y, x))
+                        {
+                            this.Walk_from_bottom(y, x);
+                        }
+
+                    }
+                    break;
+
+                case "Bottom":
+                    if (this.Direction == "Right")
+                    {
+                        if (this.Can_go_right(y, x))
+                        {
+                            this.Walk_from_left(y, x);
+                        }
+                    }
+                    else
+                    {
+                        if (this.Can_go_left(y, x))
+                        {
+                            this.Walk_from_right(y, x);
+                        }
+
+                    }
+                    break;
+            }
+
+        }
+
+        private bool Can_go_right(int y, int x)
+        {
+            return ((x != MainClass.Dimension_x - 1) && this.Chromosome.Garden_map[y, x + 1] == 0);
+        }
+
+        private bool Can_go_left(int y, int x)
+        {
+            return ((x != 0) && this.Chromosome.Garden_map[y, x - 1] == 0);
+        }
+
+        private bool Can_go_top(int y, int x)
+        {
+            return ((y != 0) && this.Chromosome.Garden_map[y - 1, x] == 0);
+        }
+
+        private bool Can_go_bottom(int y, int x)
+        {
+            return ((y != MainClass.Dimension_y - 1) && this.Chromosome.Garden_map[y + 1, x] == 0);
+        }
+
     }
 }
