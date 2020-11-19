@@ -30,7 +30,7 @@ namespace zen_garden_genetic_algorithm
                 Genes_n.Add(i);
             }
 
-            //Chromosome.Shuffle(Genes_n);
+            Chromosome.Shuffle(Genes_n);
 
             for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
             {
@@ -38,12 +38,15 @@ namespace zen_garden_genetic_algorithm
                 this.genes.Add(gene);
             }
 
-            Gene ex = this.genes.First<Gene>();
-            ex.Gene_walk();
+            //Gene ex = this.genes.First<Gene>();
+            //ex.Gene_walk();
+
+            //Gene second = this.genes[1];
+            //second.Gene_walk();
 
             this.genes.ForEach(delegate (Gene Gene)
             {
-                //Gene.Gene_walk();
+                Gene.Gene_walk();
             });
         }
 

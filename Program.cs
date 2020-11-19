@@ -26,18 +26,20 @@ namespace zen_garden_genetic_algorithm
 {
     class MainClass
     {
-        public const int Dimension_x = 4;
-        public const int Dimension_y = 4;
+        public const int Dimension_x = 6;
+        public const int Dimension_y = 6;
 
         public static void Main(string[] args)
         {
 
             int[,] Zens_garden = new int[Dimension_x, Dimension_y]
             {
-                { 0, 0, 0, 0 },
-                { 0, 0, 2, 0 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 2, 0 },
+                { 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, -1, 0, 0 },
+                { 0, -1, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, -1, 0, 0 },
+                { 0, 0, 0, 0, 0, 0 },
             };
 
             new Population(Zens_garden);

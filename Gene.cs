@@ -8,7 +8,7 @@ namespace zen_garden_genetic_algorithm
 
         public int X = 0;
         public int Y = 0;
-        public String Direction = "Right";
+        public String Direction = "Left";
 
         public Chromosome Chromosome;
 
@@ -21,7 +21,6 @@ namespace zen_garden_genetic_algorithm
 
         public void Gene_walk()
         {
-            this.N = 10;
             if (this.N <= MainClass.Dimension_x)
             {
                 this.Walk_from_top();
@@ -54,7 +53,7 @@ namespace zen_garden_genetic_algorithm
                 {
                     this.Rotate(i - 1, x, "Top");
                     br = true;
-                    if (this.Chromosome.Garden_map[y, i - 1] != 0) return;
+                    if (this.Chromosome.Garden_map[x, i - 1] != 0) return;
                 }
                 if (br) break;
                 this.Chromosome.Garden_map[i++, x] = this.Order;
