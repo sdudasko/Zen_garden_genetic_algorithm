@@ -8,30 +8,43 @@ namespace zen_garden_genetic_algorithm
     public class Chromosome
     {
         List<Gene> genes = new List<Gene>();
-        public int Finess = -1;
+        public int Fitness = -1;
+        public double Fitness_cent = 0; // Helper for selection, should be virtual
         public int[,] Garden_map = new int[MainClass.Dimension_x, MainClass.Dimension_y];
         public int Number_of_rocks = 0;
 
-        public Chromosome(int[,] Garden)
+        public List<int> Genes_n = new List<int>();
+
+        public Chromosome(int[,] Garden, List<int> Genes_n = null)
         {
             int[,] Cp = Garden.Clone() as int[,];
             this.Garden_map = Cp;
 
             this.Fill_genes();
             this.Set_fitness();
+
+            if (Genes_n != null)
+            {
+                this.Genes_n = Genes_n;
+            }
         }
 
         public void Fill_genes()
         {
-            List<int> Genes_n = new List<int>();
 
             int Number_of_genes_to_generate = (MainClass.Dimension_x + MainClass.Dimension_y) * 2;
-            for (int i = 1; i <= Number_of_genes_to_generate; i++)
+
+            if (!this.Genes_n.Any())
             {
-                Genes_n.Add(i);
+                for (int i = 1; i <= Number_of_genes_to_generate; i++)
+                {
+                    Genes_n.Add(i);
+                }
+
             }
 
             Chromosome.Shuffle(Genes_n);
+
 
             for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
             {
@@ -48,9 +61,14 @@ namespace zen_garden_genetic_algorithm
 
             this.Set_number_of_rocks();
 
-            if (this.Finess == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
+            //Console.WriteLine(this.Fitness);
+
+
+
+            if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
             {
-                Console.WriteLine("Solution found!");
+                //Console.WriteLine("Solution found!");
+                //this.Print_garden();
             }
 
         }
@@ -72,7 +90,7 @@ namespace zen_garden_genetic_algorithm
                     }
                 }
             }
-            this.Finess = Fitness;
+            this.Fitness = Fitness;
         }
 
         /**
@@ -99,7 +117,7 @@ namespace zen_garden_genetic_algorithm
         }
         public void Set_number_of_rocks()
         {
-            int Fitness = 0;
+            //int Fitness = 0;
 
             int rowLength = this.Garden_map.GetLength(0);
             int colLength = this.Garden_map.GetLength(1);
