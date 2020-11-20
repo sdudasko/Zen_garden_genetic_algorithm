@@ -12,13 +12,15 @@ namespace zen_garden_genetic_algorithm
         public double Fitness_cent = 0; // Helper for selection, should be virtual
         public int[,] Garden_map = new int[MainClass.Dimension_x, MainClass.Dimension_y];
         public int Number_of_rocks = 0;
+        public Population Population;
 
         public List<int> Genes_n = new List<int>();
 
-        public Chromosome(int[,] Garden, List<int> Genes_n = null)
+        public Chromosome(int[,] Garden, Population Population, List<int> Genes_n = null)
         {
             int[,] Cp = Garden.Clone() as int[,];
             this.Garden_map = Cp;
+            this.Population = Population;
 
             this.Fill_genes();
             this.Set_fitness();
@@ -67,8 +69,11 @@ namespace zen_garden_genetic_algorithm
 
             if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
             {
-                //Console.WriteLine("Solution found!");
-                //this.Print_garden();
+                Console.WriteLine("Solution found!: " + this.Population.N);
+                this.Print_garden();
+
+                Environment.Exit(0);
+                return;
             }
 
         }
