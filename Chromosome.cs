@@ -108,12 +108,12 @@ namespace zen_garden_genetic_algorithm
 
             int rowLength = this.Garden_map.GetLength(0);
             int colLength = this.Garden_map.GetLength(1);
-            string arrayString = "";
+            var arrayString = "";
             for (int i = 0; i < rowLength; i++)
             {
                 for (int j = 0; j < colLength; j++)
                 {
-                    arrayString += string.Format("{0} ", this.Garden_map[i, j]);
+                    arrayString += (this.Garden_map[i, j].ToString().PadLeft(2, '0') + " ");
                 }
                 arrayString += System.Environment.NewLine + System.Environment.NewLine;
             }
