@@ -54,14 +54,23 @@ namespace zen_garden_genetic_algorithm
 
             }
 
-            this.genes.ForEach(delegate (Gene Gene)
-            {
-                Gene.Gene_walk();
-            });
+            foreach (Gene Gene in this.genes) {
+                if (!Gene.Gene_walk()) break;        
+            }
 
             this.Set_fitness();
 
             this.Set_number_of_rocks();
+
+            this.Print_garden();
+            Console.WriteLine("--------------");
+
+            if (this.Population.N == 100)
+            {
+
+                Environment.Exit(0);
+            }
+
 
             if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
             {

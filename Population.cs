@@ -15,7 +15,7 @@ namespace zen_garden_genetic_algorithm
             this.Garden = Garden;
             this.N = N;
 
-            for (int i = 0; i < Config.POCET_JEDINCOV_V_GENERACII; i++)
+            for (int i = 0; i < Config.POCET_JEDINCOV_NOVEJ_KRVI; i++)
             {
                 this.chromosomes.Add(new Chromosome(Garden, this));
             }
@@ -30,7 +30,12 @@ namespace zen_garden_genetic_algorithm
             int len = (Given_chromosomes[0].Genes_n.Count) / 2; // Pouzivame iba prvu polovicu vygenerovanych genov
             int c = 0;
 
-            Console.WriteLine("Creating new population: " + this.N);
+            if (Given_chromosomes[0].Fitness > 100)
+            {
+                Console.WriteLine("Creating new population: " + this.N);
+                Console.WriteLine("GCH: " + Given_chromosomes[0].Fitness);
+            }
+            
             Population New_population = new Population(this.Garden, ++this.N);
 
             for (int Chromosome_couple_counter = 0; Chromosome_couple_counter < Given_chromosomes.Count / 2; Chromosome_couple_counter++)

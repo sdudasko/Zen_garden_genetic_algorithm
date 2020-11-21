@@ -34,24 +34,6 @@ namespace zen_garden_genetic_algorithm
         public static void Main(string[] args)
         {
 
-            //int[,] Zens_garden = new int[Dimension_x, Dimension_y]
-            //{
-            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //    { 0, -1, 0, 0, 0, -1, 0, 0 },
-            //    { 0, 0, 0, -1, 0, 0, 0, 0 },
-            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //    { 0, 0, 0, 0, -1, 0, 0, 0 },
-            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //    { 0, 0, 0, 0, -1, 0, 0, 0 },
-            //};
-
-            //Population First_population = new Population(Zens_garden, 0);
-
-            //List<Chromosome> Selection_for_mixing = First_population.Select_chromosomes_for_mixing_by_roulette();
-
-            //First_population.Mix_chromosomes(Selection_for_mixing);
-
             new TestCase().TestZadanie();
 
         }
