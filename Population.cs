@@ -15,37 +15,10 @@ namespace zen_garden_genetic_algorithm
             this.Garden = Garden;
             this.N = N;
 
-            Chromosome first = new Chromosome(Garden, this);
-            Chromosome second = new Chromosome(Garden, this);
-            Chromosome third = new Chromosome(Garden, this);
-            Chromosome fourth = new Chromosome(Garden, this);
-
-            this.chromosomes.Add(first);
-            this.chromosomes.Add(second);
-            this.chromosomes.Add(third);
-            this.chromosomes.Add(fourth);
-
-            //Console.WriteLine("First:");
-            //first.Print_garden();
-            //Console.WriteLine("Second:");
-            //second.Print_garden();
-            //Console.WriteLine("Third:");
-            //third.Print_garden();
-            //Console.WriteLine("Fourth:");
-            //fourth.Print_garden();
-
-            List<Chromosome> Selection_for_mixing = this.Select_chromosomes_for_mixing_by_roulette();
-
-            //Console.WriteLine("First':");
-            //Selection_for_mixing[0].Print_garden();
-            //Console.WriteLine("Second':");
-            //Selection_for_mixing[1].Print_garden();
-            //Console.WriteLine("Third':");
-            //Selection_for_mixing[2].Print_garden();
-            //Console.WriteLine("Fourth':");
-            //Selection_for_mixing[3].Print_garden();
-
-            this.Mix_chromosomes(Selection_for_mixing);
+            for (int i = 0; i < Config.POCET_JEDINCOV_V_GENERACII; i++)
+            {
+                this.chromosomes.Add(new Chromosome(Garden, this));
+            }
         }
 
         public void Mix_chromosomes(List<Chromosome> Given_chromosomes)
@@ -58,7 +31,7 @@ namespace zen_garden_genetic_algorithm
             int c = 0;
 
             Console.WriteLine("Creating new population: " + this.N);
-            Population New_population = new Population(this.Garden, this.N + 1);
+            Population New_population = new Population(this.Garden, ++this.N);
 
             for (int Chromosome_couple_counter = 0; Chromosome_couple_counter < Given_chromosomes.Count / 2; Chromosome_couple_counter++)
             {
@@ -73,13 +46,18 @@ namespace zen_garden_genetic_algorithm
                         Mixed_genes.Add(Given_chromosomes[Chromosome_couple_counter + 1].Genes_n[c]);
                         c++;
                     }
-
                 }
 
                 Chromosome Freshly_mixxed_chromosome = new Chromosome(this.Garden, this, Mixed_genes);
 
                 New_population.chromosomes.Add(Freshly_mixxed_chromosome);
+
+                c = 0;
             }
+
+
+            // Mame vytvorene dvojice, ideme znova krizit
+            this.Mix_chromosomes(New_population.chromosomes);
         }
 
         public List<Chromosome> Select_chromosomes_for_mixing_by_roulette()
@@ -94,7 +72,6 @@ namespace zen_garden_genetic_algorithm
                 double ads = ((chromosome.Fitness * Fitness_cent) / 100) + lastDistribution;
                 chromosome.Fitness_cent = ads;
                 lastDistribution = ads;
-                //Console.WriteLine("Distribution: " + ads);
             }
 
             this.chromosomes = this.chromosomes.OrderBy(item => item.Fitness_cent).ToList();
@@ -105,7 +82,6 @@ namespace zen_garden_genetic_algorithm
                 var probability = rnd.NextDouble();
                 var selected = this.chromosomes.SkipWhile(item => item.Fitness_cent < probability).First();
 
-                //Console.WriteLine("Probability: " + probability);
                 Selection_for_mixing.Add(selected);
                 
             }

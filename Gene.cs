@@ -11,6 +11,7 @@ namespace zen_garden_genetic_algorithm
         public String Direction = "Left";
 
         public Chromosome Chromosome;
+        public bool isARock = false;
 
         public Gene(int N, Chromosome Chromosome, int Order)
         {

@@ -35,6 +35,9 @@
     <Compile Include="Gene.cs" />
     <Compile Include="Chromosome.cs" />
     <Compile Include="Population.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="TestCase.cs" />
+    <Compile Include="BaseContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

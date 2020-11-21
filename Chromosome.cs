@@ -22,13 +22,14 @@ namespace zen_garden_genetic_algorithm
             this.Garden_map = Cp;
             this.Population = Population;
 
-            this.Fill_genes();
-            this.Set_fitness();
-
             if (Genes_n != null)
             {
                 this.Genes_n = Genes_n;
             }
+
+            this.Fill_genes();
+            this.Set_fitness();
+
         }
 
         public void Fill_genes()
@@ -36,22 +37,21 @@ namespace zen_garden_genetic_algorithm
 
             int Number_of_genes_to_generate = (MainClass.Dimension_x + MainClass.Dimension_y) * 2;
 
-            if (!this.Genes_n.Any())
+            if (this.Genes_n.Count == 0)
             {
+
                 for (int i = 1; i <= Number_of_genes_to_generate; i++)
                 {
                     Genes_n.Add(i);
                 }
+                Chromosome.Shuffle(Genes_n);
 
-            }
+                for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
+                {
+                    Gene gene = new Gene(Genes_n[i], this, i + 1);
+                    this.genes.Add(gene);
+                }
 
-            Chromosome.Shuffle(Genes_n);
-
-
-            for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
-            {
-                Gene gene = new Gene(Genes_n[i], this, i+1);
-                this.genes.Add(gene);
             }
 
             this.genes.ForEach(delegate (Gene Gene)
@@ -62,10 +62,6 @@ namespace zen_garden_genetic_algorithm
             this.Set_fitness();
 
             this.Set_number_of_rocks();
-
-            //Console.WriteLine(this.Fitness);
-
-
 
             if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
             {

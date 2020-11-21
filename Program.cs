@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /**
  * Rodicovske stavy, ktore vytvaraju potomkov
@@ -26,29 +28,31 @@ namespace zen_garden_genetic_algorithm
 {
     class MainClass
     {
-        public const int Dimension_x = 8;
-        public const int Dimension_y = 8;
+        public static int Dimension_x = 8;
+        public static int Dimension_y = 8;
 
         public static void Main(string[] args)
         {
 
-            int[,] Zens_garden = new int[Dimension_x, Dimension_y]
-            {
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, -1, 0, 0, 0, -1, 0, 0 },
-                { 0, 0, 0, -1, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, -1, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, -1, 0, 0, 0 },
+            //int[,] Zens_garden = new int[Dimension_x, Dimension_y]
+            //{
+            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+            //    { 0, -1, 0, 0, 0, -1, 0, 0 },
+            //    { 0, 0, 0, -1, 0, 0, 0, 0 },
+            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+            //    { 0, 0, 0, 0, -1, 0, 0, 0 },
+            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+            //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+            //    { 0, 0, 0, 0, -1, 0, 0, 0 },
+            //};
 
-                //{ 0, 0, 0 },
-                //{ 0, 0, 0 },
-                //{ 0, 0, 0 },
-            };
+            //Population First_population = new Population(Zens_garden, 0);
 
-            new Population(Zens_garden, 0);
+            //List<Chromosome> Selection_for_mixing = First_population.Select_chromosomes_for_mixing_by_roulette();
+
+            //First_population.Mix_chromosomes(Selection_for_mixing);
+
+            new TestCase().TestZadanie();
 
         }
         public static int Get_obvod()
