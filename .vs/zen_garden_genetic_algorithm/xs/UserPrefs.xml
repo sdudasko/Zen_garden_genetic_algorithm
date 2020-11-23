@@ -1,26 +1,22 @@
 ﻿<Properties StartupConfiguration="{741363F6-FD9E-41F0-ABA3-9ACA0DF5A129}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Population.cs">
     <Files>
-      <File FileName="Population.cs" Line="54" Column="1" />
-      <File FileName="Program.cs" Line="32" Column="20" />
-      <File FileName="Gene.cs" Line="4" Column="22" />
-      <File FileName="Chromosome.cs" Line="33" Column="10" />
-      <File FileName="Config.cs" Line="7" Column="6" />
-      <File FileName="TestCase.cs" Line="8" Column="10" />
+      <File FileName="Population.cs" Line="28" Column="13" />
+      <File FileName="Program.cs" Line="15" Column="44" />
+      <File FileName="Gene.cs" />
+      <File FileName="Chromosome.cs" />
+      <File FileName="Config.cs" />
+      <File FileName="TestCase.cs" Line="118" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="zen_garden_genetic_algorithm" expanded="True">
             <Node name="zen_garden_genetic_algorithm" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Population.cs" selected="True" />
             </Node>
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

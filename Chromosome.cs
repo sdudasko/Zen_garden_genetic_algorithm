@@ -7,16 +7,17 @@ namespace zen_garden_genetic_algorithm
 {
     public class Chromosome
     {
-        List<Gene> genes = new List<Gene>();
-        public int Fitness = -1;
+        public List<Gene> genes = new List<Gene>(); // hasMany()
+        public int Fitness = -1; ///
         public double Fitness_cent = 0; // Helper for selection, should be virtual
         public int[,] Garden_map = new int[MainClass.Dimension_x, MainClass.Dimension_y];
         public int Number_of_rocks = 0;
-        public Population Population;
-
+        public Population Population; // belongsTo()
+        
         public List<int> Genes_n = new List<int>();
+        public List<String> Directions = new List<String>(); // We pass directions as param for mixing genes
 
-        public Chromosome(int[,] Garden, Population Population, List<int> Genes_n = null)
+        public Chromosome(int[,] Garden, Population Population, List<int> Genes_n = null, List<String> Directions = null)
         {
             int[,] Cp = Garden.Clone() as int[,];
             this.Garden_map = Cp;
@@ -26,32 +27,66 @@ namespace zen_garden_genetic_algorithm
             {
                 this.Genes_n = Genes_n;
             }
+            if (Directions != null)
+            {
+                this.Directions = Directions;
+            }
 
             this.Fill_genes();
             this.Set_fitness();
 
         }
 
+        /**
+         * Creating new genes or taking genes from parameter and then walking the garden from them.
+         * Then setting fitness and checking if solution was found.
+         */
         public void Fill_genes()
         {
 
             int Number_of_genes_to_generate = (MainClass.Dimension_x + MainClass.Dimension_y) * 2;
+            Random r = new Random();
 
             if (this.Genes_n.Count == 0)
             {
 
                 for (int i = 1; i <= Number_of_genes_to_generate; i++)
                 {
-                    Genes_n.Add(i);
+                    this.Genes_n.Add(i);
                 }
                 Chromosome.Shuffle(Genes_n);
 
-                for (int i = 0; i < Number_of_genes_to_generate / 2; i++) // TODO +k
+                for (int i = 0; i < Number_of_genes_to_generate / 2; i++)
                 {
                     Gene gene = new Gene(Genes_n[i], this, i + 1);
+
+                    if (Config.SANCA_NA_MUTACIU_GENU_V_PERCENTACH/100 > r.NextDouble())
+                    {
+                        int mutovanyGen = r.Next(i, Number_of_genes_to_generate / 2);
+                        gene.N = mutovanyGen;
+                    }
+
                     this.genes.Add(gene);
                 }
 
+            } else
+            {
+                this.genes = new List<Gene>();
+
+                for (int i = 0; i < Number_of_genes_to_generate / 2; i++)
+                {
+                    Gene gene = new Gene(Genes_n[i], this, i + 1);
+
+                    gene.Direction = this.Directions[i];
+
+                    if (Config.SANCA_NA_MUTACIU_GENU_V_PERCENTACH / 100 > r.NextDouble())
+                    {
+                        int mutovanyGen = r.Next(i, Number_of_genes_to_generate / 2);
+                        gene.N = mutovanyGen;
+                    }
+
+                    this.genes.Add(gene);
+                }
             }
 
             foreach (Gene Gene in this.genes) {
@@ -59,20 +94,9 @@ namespace zen_garden_genetic_algorithm
             }
 
             this.Set_fitness();
-
             this.Set_number_of_rocks();
 
-            this.Print_garden();
-            Console.WriteLine("--------------");
-
-            if (this.Population.N == 100)
-            {
-
-                Environment.Exit(0);
-            }
-
-
-            if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks))
+            if (this.Fitness == ((MainClass.Dimension_x * MainClass.Dimension_y) - this.Number_of_rocks)) // Kontorla, ci mame riesenie
             {
                 Console.WriteLine("Solution found!: " + this.Population.N);
                 this.Print_garden();
@@ -83,7 +107,7 @@ namespace zen_garden_genetic_algorithm
 
         }
 
-        public void Set_fitness()
+        public void Set_fitness() // Fitness je pocet pohrabanych policok
         {
             int Fitness = 0;
 
@@ -108,7 +132,7 @@ namespace zen_garden_genetic_algorithm
          * Code used from:
          * https://stackoverflow.com/a/12827010/6525417
          */
-        public void Print_garden()
+        public void Print_garden() // Printing garden
         {
 
             int rowLength = this.Garden_map.GetLength(0);
@@ -125,10 +149,8 @@ namespace zen_garden_genetic_algorithm
 
             Console.Write(arrayString);
         }
-        public void Set_number_of_rocks()
+        public void Set_number_of_rocks() // We want to be flexible with rocks and have a single source of truth
         {
-            //int Fitness = 0;
-
             int rowLength = this.Garden_map.GetLength(0);
             int colLength = this.Garden_map.GetLength(1);
 

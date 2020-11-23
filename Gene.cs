@@ -3,24 +3,26 @@ namespace zen_garden_genetic_algorithm
 {
     public class Gene
     {
-        public int N; // Gene is nth -> Indexing from 1 (for easier matrix notation)
-        public int Order;
+        public int N; // Gene is nth -> Indexing from 1 (for easier matrix notation) (je to index, z ktoreho vstupujeme)
+        public int Order; // Order of the gene for notation to matrix
+        public String Direction = ""; // We are remembering direction in gene unless its the first population so we generate it random
+        public Chromosome Chromosome; // belongsTo()
 
-        public int X = 0;
-        public int Y = 0;
-        public String Direction = "Right";
-
-        public Chromosome Chromosome;
-        public bool isARock = false;
-
-        public Gene(int N, Chromosome Chromosome, int Order)
+        public Gene(int N, Chromosome Chromosome, int Order, String Direction = "")
         {
             this.N = N;
             this.Chromosome = Chromosome;
             this.Order = Order;
+
+            if (Direction != "") { this.Direction = Direction; } else { // First generation directions is random
+                Random r = new Random();
+                if (r.NextDouble() > 0.5) { this.Direction = "Left"; }
+                else { this.Direction = "Right"; }
+            }
+
         }
 
-        public bool Gene_walk()
+        public bool Gene_walk() // Walking from N to the end of garden
         {
             if (this.N <= MainClass.Dimension_x)
             {
@@ -38,10 +40,16 @@ namespace zen_garden_genetic_algorithm
             return true;
         }
 
+        /**
+         *  We are walking from the top and trying to get on the bottom. Similar for all directions
+         *  This function has initial "nullable" args, set for -1
+         *  The function can be through Rotate() be recursively called
+         *  The same for all directions
+         */ 
         public bool Walk_from_top(int y = -1, int x = -1)
         {
             int i = y;
-            if (y == -1 || x == -1)
+            if (y == -1 || x == -1) // If starting from the rim 
             {
                 x = this.N - 1;
                 i = 0;
@@ -55,7 +63,6 @@ namespace zen_garden_genetic_algorithm
                 {
                     if (!this.Rotate(i - 1, x, "Top")) return false;
                     br = true;
-                    //if (this.Chromosome.Garden_map[x, i - 1] != 0) return;
                 }
                 if (br) break;
                 this.Chromosome.Garden_map[i++, x] = this.Order;
@@ -102,7 +109,7 @@ namespace zen_garden_genetic_algorithm
 
             while (i > 0)
             {
-                if (this.Chromosome.Garden_map[i - 1, x] != 0) // TODO - toto musi niekedy crashnut
+                if (this.Chromosome.Garden_map[i - 1, x] != 0)
                 {
                     if (!this.Rotate(i, x, "Bottom")) return false;
                     br = true;
@@ -133,16 +140,19 @@ namespace zen_garden_genetic_algorithm
                 }
 
                 if (br) break;
-                this.Chromosome.Garden_map[y, i++] = this.Order; // TODO - vsade
+                this.Chromosome.Garden_map[y, i++] = this.Order;
             }
             return true;
         }
 
+        /**
+         * Rotating the movement based on where we are walking from and the direction set for the gene.
+         */
         private bool Rotate(int y, int x, String From = "")
         {
             switch (From) {
                 case "Top":
-                    if (this.Direction == "Right") // TODO - Zobrat z genu
+                    if (this.Direction == "Right")
                     {
                         if (this.Can_go_left(y, x)) this.Walk_from_right(y, x);
                         else {
@@ -233,6 +243,9 @@ namespace zen_garden_genetic_algorithm
 
         }
 
+        /**
+         * Helper checks
+         */
         private bool Is_on_rim(int y, int x)
         {
             if ((y == 0) || (y == MainClass.Dimension_y - 1) || (x == 0) || (x == MainClass.Dimension_x - 1)) return true;
